@@ -22,12 +22,12 @@ def os_info [] {
 }
 
 def host_info [] {
-  let machine = (uname | get machine)
+	let machine = (uname | get machine)
 	make_field "host" $machine
 }
 
 def kernel_info [] {
-  let kernel_version = ($sys | get host.kernel_version)
+	let kernel_version = ($sys | get host.kernel_version)
 	make_field "kernel" $kernel_version
 }
 
@@ -41,14 +41,11 @@ def mem_info [] {
 	make_field "memory" $"($mem.available) / ($mem.total)"
 }
 
-let fields = [
+[
 	(user_signature),
 	(os_info),
 	(host_info),
 	(kernel_info),
 	(uptime_info),
 	(mem_info)
-]
-
-$fields | reduce {|it| ($it | into string) ++ "\n"}
-$fields | to text
+] | to text
